@@ -1,15 +1,58 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        FlightBookingFacade bookingFacade = new FlightBookingFacade();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        System.out.println("=== TEST 1: Standard Successful Booking ===");
+        String ticket1 = bookingFacade.bookFlight(
+                "Amina Suleimenova",
+                "KC101",
+                "14A",
+                320.00,
+                2,
+                23.0,
+                "EUR",
+                "4532015112830366",
+                "SILVER");
+        System.out.println("Result 1: " + ticket1 + "\n");
+
+        System.out.println("=== TEST 2: Blocked Crew Seat (Row 13) ===");
+        String ticket2 = bookingFacade.bookFlight(
+                "Daniyar Kassymov",
+                "KC101",
+                "13C",
+                320.00,
+                1,
+                15.0,
+                "USD",
+                "4532015112830366",
+                "SILVER");
+        System.out.println("Result 2: " + ticket2 + "\n");
+
+        System.out.println("=== TEST 3: Payment Failure & Automatic Seat Rollback ===");
+        String ticket3 = bookingFacade.bookFlight(
+                "Timur Bekov",
+                "KC101",
+                "07D",
+                320.00,
+                1,
+                18.0,
+                "KZT",
+                "9999",
+                "SILVER");
+        System.out.println("Result 3: " + ticket3 + "\n");
+
+        System.out.println("=== TEST 4: Silver Tier Loyalty (Free Baggage + 10% Promo) ===");
+        String ticket4 = bookingFacade.bookFlight(
+                "Alikhan Nurlanov",
+                "KC204",
+                "08C",
+                400.00,
+                3,
+                30.0,
+                "USD",
+                "4532015112830366",
+                "SILVER"
+        );
+        System.out.println("Result 4: " + ticket4 + "\n");
     }
 }
